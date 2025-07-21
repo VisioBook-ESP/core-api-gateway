@@ -28,7 +28,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/visiobook-esp/core-api-gateway:latest .
+          docker build -t ghcr.io/visiobook-esp/core-api-gateway:latest ./poc
 
       - name: Push Docker image
         run: |
