@@ -1,0 +1,9 @@
+name: Test Org Runner
+
+on: [push]
+
+jobs:
+  org-runner-test:
+    runs-on: [self-hosted, org]
+    steps:
+      - run: echo "✅ Running on organization-level self-hosted runner!"

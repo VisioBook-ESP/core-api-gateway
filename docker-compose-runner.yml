@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  github-runner:
+    image: myoung34/github-runner:latest
+    container_name: github-org-runner
+    restart: unless-stopped
+    environment:
+      RUNNER_NAME: ${RUNNER_NAME}
+      RUNNER_REPO_URL: ${GH_URL}
+      RUNNER_TOKEN: ${GH_TOKEN}
+      RUNNER_SCOPE: org
+      LABELS: ${RUNNER_LABELS}
+      ORG_RUNNER: true
+      RUNNER_WORKDIR: /tmp/github-runner
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
