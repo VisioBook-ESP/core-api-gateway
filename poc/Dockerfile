@@ -5,7 +5,7 @@ FROM nginx:alpine
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copy your website files (e.g., HTML) into the NGINX web root
-COPY ./html /usr/share/nginx/html
+# COPY ./html /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
