@@ -25,11 +25,22 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build Docker image
+      - name: Build and Push Docker image
         run: |
-          docker build -t ghcr.io/visiobook-esp/core-api-gateway:latest ./poc
+    # Generate unique tag (timestamp + short SHA)
+          TIMESTAMP=$(date +%Y%m%d%H%M%S)
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          VERSION="${TIMESTAMP}-${SHORT_SHA}"
 
-      - name: Push Docker image
-        run: |
+    # Build with version tag
+          docker build -t ghcr.io/visiobook-esp/core-api-gateway:$VERSION ./poc
+
+    # Also tag as latest
+          docker tag ghcr.io/visiobook-esp/core-api-gateway:$VERSION ghcr.io/visiobook-esp/core-api-gateway:latest
+
+    # Push both tags
+          docker push ghcr.io/visiobook-esp/core-api-gateway:$VERSION
           docker push ghcr.io/visiobook-esp/core-api-gateway:latest
+
+    # Store version for subsequent steps
+          echo "IMAGE_VERSION=$VERSION" >> $GITHUB_ENV
